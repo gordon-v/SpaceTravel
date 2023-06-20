@@ -15,7 +15,11 @@ namespace SpaceTravel
         public float X { set; get; }
         public float Y { set; get; }
         public float Z { set; get; }
+
+        public float pZ { set; get; }
         public float radius { set; get; }
+
+        private int speed { set; get; } = 10;
 
         private Random r;
 
@@ -24,10 +28,9 @@ namespace SpaceTravel
             this.Width = Width;
             this.Height = Height;
 
-
             r = rand;
 
-            radius = 4;
+            
             Reset();
         }
         public void Reset()
@@ -35,28 +38,41 @@ namespace SpaceTravel
             X = r.Next(-Width, Width);
             Y = r.Next(-Height, Height);
             Z = r.Next(0, Width);
+            pZ = Z;
         }
         public void Update()
         {
-            Z -= 10;
+            Z -= speed;
             if (Z <= 0)
             {
                 this.Reset();
             }
         }
-        public void Draw(Graphics g)
+        public void Draw(Graphics g, int Speed)
         {
+            this.speed = Speed;
+
             Brush b = new SolidBrush(Color.White);
+            Pen p = new Pen(Color.White);
 
             this.Update();
 
             float offsetX = (float) Scene.relativeMap((float) X / Z ,0, 1, Scene.center.X, Width);
-            float offsetY = (float)Scene.relativeMap((float) Y / Z ,0, 1, Scene.center.Y, Height);
-            //float scaleZ = 0.0001f * (2000.0f - Z);
+            float offsetY = (float) Scene.relativeMap((float) Y / Z ,0, 1, Scene.center.Y, Height);
+            
 
+            radius = (float)Scene.relativeMap(Z, 0, Width, 4, 0); //make the radius get bigger as the stars get closer
 
             g.FillEllipse(b, offsetX - radius, offsetY - radius, radius * 2, radius * 2);
+
+            float pX = (float)Scene.relativeMap((float)X / pZ, 0, 1, Scene.center.X, Width);
+            float pY = (float)Scene.relativeMap((float)Y / pZ, 0, 1, Scene.center.Y, Height);
+            pZ = Z;
+            g.DrawLine(p, pX, pY, offsetX, offsetY);
+            
             g.Flush();
+
+
         }
     }
 }

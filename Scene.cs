@@ -11,6 +11,8 @@ namespace SpaceTravel
     {
         int Width;
         int Height;
+
+        public int Speed { set; get; }
         public static Point center { set; get; }
 
         List<Star> stars;
@@ -37,7 +39,7 @@ namespace SpaceTravel
             g.Clear(Color.Black);
             foreach (Star s in stars)
             {
-                s.Draw(g);
+                s.Draw(g, Speed);
             }
         }
 
