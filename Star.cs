@@ -32,8 +32,8 @@ namespace SpaceTravel
         }
         public void Reset()
         {
-            X = r.Next(0, Width);
-            Y = r.Next(0, Height);
+            X = r.Next(-Width, Width);
+            Y = r.Next(-Height, Height);
             Z = r.Next(0, Width);
         }
         public void Update()
@@ -50,12 +50,12 @@ namespace SpaceTravel
 
             this.Update();
 
-            float offsetX = 100.0f * (X / Z);
-            float offsetY = 100.0f * (Y / Z);
-            float scaleZ = 0.0001f * (2000.0f - Z);
+            float offsetX = (float) Scene.relativeMap((float) X / Z ,0, 1, Scene.center.X, Width);
+            float offsetY = (float)Scene.relativeMap((float) Y / Z ,0, 1, Scene.center.Y, Height);
+            //float scaleZ = 0.0001f * (2000.0f - Z);
 
 
-            g.FillEllipse(b, X - radius, Y - radius, radius * 2, radius * 2);
+            g.FillEllipse(b, offsetX - radius, offsetY - radius, radius * 2, radius * 2);
             g.Flush();
         }
     }

@@ -16,8 +16,12 @@ namespace SpaceTravel
         public Form1()
         {
             InitializeComponent();
+            DoubleBuffered = true;
+
             scene = new Scene(Width, Height);
             scene.GenerateStars(100);
+
+            timer1.Start();
             
         }
 

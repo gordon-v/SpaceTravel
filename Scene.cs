@@ -11,11 +11,13 @@ namespace SpaceTravel
     {
         int Width;
         int Height;
+        public static Point center { set; get; }
 
         List<Star> stars;
         public Scene(int Width, int Height) { 
             this.Width = Width;
             this.Height = Height;
+            center = new Point(Width/2,Height/2);
 
             stars = new List<Star>();
         }
