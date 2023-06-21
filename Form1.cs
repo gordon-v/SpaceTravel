@@ -13,6 +13,8 @@ namespace SpaceTravel
 {
     public partial class SpaceTravel : Form
     {
+        bool flag = true;
+
         Scene scene;
         int imageCount;
         int planetCount = 0;
@@ -86,32 +88,52 @@ namespace SpaceTravel
             scene.Speed= 100;
         }
 
-
-        private void L_RightArrow_Click(object sender, EventArgs e)
+        private bool checkStarted()
         {
-            if (planetCount < imageCount - 1)
+            if (scene.started)
             {
-                planetCount++;
+                EP_DestinationSwitch.SetError(L_Destination, "Cannot switch destination while moving!");
+                return false;
             }
             else
             {
-                planetCount = 0;
+                EP_DestinationSwitch.Clear();
             }
-            UpdateLabels();
+            return true;
+        }
+        private void L_RightArrow_Click(object sender, EventArgs e)
+        {
+            if (checkStarted())
+            {
+                if (planetCount < imageCount - 1)
+                {
+                    planetCount++;
+                }
+                else
+                {
+                    planetCount = 0;
+                }
+                UpdateLabels();
+            }
+            
 
         }
 
         private void L_LeftArrow_Click(object sender, EventArgs e)
         {
-            if (planetCount > 0)
+            if (checkStarted())
             {
-                planetCount--;
+                if (planetCount > 0)
+                {
+                    planetCount--;
+                }
+                else
+                {
+                    planetCount = imageCount - 1;
+                }
+                UpdateLabels();
             }
-            else
-            {
-                planetCount = imageCount - 1;
-            }
-            UpdateLabels();
+            
         }
 
         private void UpdateLabels()
@@ -129,6 +151,39 @@ namespace SpaceTravel
         private void L_PlanetName_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void L_START_Click(object sender, EventArgs e)
+        {
+            if (!scene.started)
+            {
+                scene.started = true;
+                L_START.Text = "STOP";
+                L_START.ForeColor = Color.DarkRed;
+            }
+            else
+            {
+                scene.started = false;
+                L_START.Text = "START";
+                L_START.ForeColor = Color.MediumSeaGreen;
+            }
+            
+        }
+
+        private void T_BlinkingStart_Tick(object sender, EventArgs e)
+        {
+            if (!scene.started) {
+                if (flag)
+                {
+                    L_START.ForeColor = Color.LawnGreen;
+                    flag = false;
+                }
+                else
+                {
+                    L_START.ForeColor = Color.MediumSeaGreen;
+                    flag = true;
+                }
+            }
         }
     }
 }

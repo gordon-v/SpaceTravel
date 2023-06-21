@@ -37,7 +37,7 @@
             this.L_Warp = new System.Windows.Forms.Label();
             this.L_Lightspeed = new System.Windows.Forms.Label();
             this.PB_Distance = new System.Windows.Forms.ProgressBar();
-            this.label1 = new System.Windows.Forms.Label();
+            this.L_Destination = new System.Windows.Forms.Label();
             this.IL_Planets = new System.Windows.Forms.ImageList(this.components);
             this.PB_Planet = new System.Windows.Forms.PictureBox();
             this.L_RightArrow = new System.Windows.Forms.Label();
@@ -45,8 +45,12 @@
             this.L_PlanetName = new System.Windows.Forms.Label();
             this.L_Distance = new System.Windows.Forms.Label();
             this.L_DistanceNum = new System.Windows.Forms.Label();
+            this.L_START = new System.Windows.Forms.Label();
+            this.T_BlinkingStart = new System.Windows.Forms.Timer(this.components);
+            this.EP_DestinationSwitch = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Planet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EP_DestinationSwitch)).BeginInit();
             this.SuspendLayout();
             // 
             // timer1
@@ -72,7 +76,7 @@
             this.L_speed.BackColor = System.Drawing.Color.Black;
             this.L_speed.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.14286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.L_speed.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.L_speed.Location = new System.Drawing.Point(709, 829);
+            this.L_speed.Location = new System.Drawing.Point(702, 829);
             this.L_speed.Name = "L_speed";
             this.L_speed.Size = new System.Drawing.Size(100, 29);
             this.L_speed.TabIndex = 2;
@@ -128,17 +132,17 @@
             this.PB_Distance.TabIndex = 6;
             this.PB_Distance.Value = 50;
             // 
-            // label1
+            // L_Destination
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Black;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.14286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.label1.Location = new System.Drawing.Point(435, 829);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(182, 29);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "DESTINATION:";
+            this.L_Destination.AutoSize = true;
+            this.L_Destination.BackColor = System.Drawing.Color.Black;
+            this.L_Destination.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.14286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.L_Destination.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.L_Destination.Location = new System.Drawing.Point(435, 829);
+            this.L_Destination.Name = "L_Destination";
+            this.L_Destination.Size = new System.Drawing.Size(182, 29);
+            this.L_Destination.TabIndex = 7;
+            this.L_Destination.Text = "DESTINATION:";
             // 
             // IL_Planets
             // 
@@ -221,18 +225,42 @@
             this.L_DistanceNum.TabIndex = 16;
             this.L_DistanceNum.Text = "km";
             // 
+            // L_START
+            // 
+            this.L_START.AutoSize = true;
+            this.L_START.BackColor = System.Drawing.Color.Black;
+            this.L_START.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.14286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.L_START.ForeColor = System.Drawing.Color.MediumSeaGreen;
+            this.L_START.Location = new System.Drawing.Point(860, 829);
+            this.L_START.Name = "L_START";
+            this.L_START.Size = new System.Drawing.Size(93, 29);
+            this.L_START.TabIndex = 17;
+            this.L_START.Text = "START";
+            this.L_START.Click += new System.EventHandler(this.L_START_Click);
+            // 
+            // T_BlinkingStart
+            // 
+            this.T_BlinkingStart.Enabled = true;
+            this.T_BlinkingStart.Interval = 700;
+            this.T_BlinkingStart.Tick += new System.EventHandler(this.T_BlinkingStart_Tick);
+            // 
+            // EP_DestinationSwitch
+            // 
+            this.EP_DestinationSwitch.ContainerControl = this;
+            // 
             // SpaceTravel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1661, 1053);
+            this.Controls.Add(this.L_START);
             this.Controls.Add(this.L_DistanceNum);
             this.Controls.Add(this.L_Distance);
             this.Controls.Add(this.L_PlanetName);
             this.Controls.Add(this.L_LeftArrow);
             this.Controls.Add(this.L_RightArrow);
             this.Controls.Add(this.PB_Planet);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.L_Destination);
             this.Controls.Add(this.PB_Distance);
             this.Controls.Add(this.L_Lightspeed);
             this.Controls.Add(this.L_Warp);
@@ -245,6 +273,7 @@
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Planet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EP_DestinationSwitch)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -259,7 +288,7 @@
         private System.Windows.Forms.Label L_Warp;
         private System.Windows.Forms.Label L_Lightspeed;
         private System.Windows.Forms.ProgressBar PB_Distance;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label L_Destination;
         private System.Windows.Forms.ImageList IL_Planets;
         private System.Windows.Forms.PictureBox PB_Planet;
         private System.Windows.Forms.Label L_RightArrow;
@@ -267,6 +296,9 @@
         private System.Windows.Forms.Label L_PlanetName;
         private System.Windows.Forms.Label L_Distance;
         private System.Windows.Forms.Label L_DistanceNum;
+        private System.Windows.Forms.Label L_START;
+        private System.Windows.Forms.Timer T_BlinkingStart;
+        private System.Windows.Forms.ErrorProvider EP_DestinationSwitch;
     }
 }
 

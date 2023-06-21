@@ -12,6 +12,7 @@ namespace SpaceTravel
         int Width;
         int Height;
 
+        public bool started { set; get; } = false;
         public long[] Distance { set; get; }
         public string[] Planets { set; get; } 
         public int Speed { set; get; }
@@ -51,7 +52,7 @@ namespace SpaceTravel
             g.Clear(Color.Black);
             foreach (Star s in stars)
             {
-                s.Draw(g, Speed);
+                s.Draw(g, Speed, started);
             }
         }
 

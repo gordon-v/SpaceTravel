@@ -48,14 +48,17 @@ namespace SpaceTravel
                 this.Reset();
             }
         }
-        public void Draw(Graphics g, int Speed)
+        public void Draw(Graphics g, int Speed, bool started)
         {
             this.speed = Speed;
 
             Brush b = new SolidBrush(Color.White);
             Pen p = new Pen(Color.White);
-
-            this.Update();
+            if (started)
+            {
+                this.Update();
+            }
+            
 
             float offsetX = (float) Scene.relativeMap((float) X / Z ,0, 1, Scene.center.X, Width);
             float offsetY = (float) Scene.relativeMap((float) Y / Z ,0, 1, Scene.center.Y, Height);
