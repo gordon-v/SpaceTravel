@@ -12,6 +12,8 @@ namespace SpaceTravel
         int Width;
         int Height;
 
+        public long[] Distance { set; get; }
+        public string[] Planets { set; get; } 
         public int Speed { set; get; }
         public static Point center { set; get; }
 
@@ -20,6 +22,16 @@ namespace SpaceTravel
             this.Width = Width;
             this.Height = Height;
             center = new Point(Width/2,Height/2);
+
+            Distance = new long[3];
+            Distance[0] = 588000000;
+            Distance[1] = 384000;
+            Distance[2] = 4300000000;
+
+            Planets = new string[3];
+            Planets[0] = "Jupiter";
+            Planets[1] = "Moon";
+            Planets[2] = "Neptune";
 
             stars = new List<Star>();
         }
