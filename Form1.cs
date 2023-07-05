@@ -14,11 +14,14 @@ namespace SpaceTravel
     public partial class SpaceTravel : Form
     {
         bool flag = true;
+        bool flickerFlag = true;
 
         Scene scene;
         int imageCount;
         int planetCount = 0;
+
         long dist;
+        long passedKm;
         
         public SpaceTravel()
         {
@@ -30,10 +33,13 @@ namespace SpaceTravel
             L_Cruise.ForeColor = Color.DarkOrange;
             imageCount = IL_Planets.Images.Count;
             PB_Planet.Image = IL_Planets.Images[planetCount];
-            L_PlanetName.Text = $"Name: {scene.Planets[0]}";
-            L_DistanceNum.Text = $"{scene.Distance[0]}km";
 
+            L_PlanetName.Text = $"Name: {scene.Planets[0]}";
             dist = scene.Distance[0];
+            passedKm = 0;
+            L_DistanceNum.Text = $"{dist}km";
+
+            
 
             scene.GenerateStars(300);
 
@@ -51,7 +57,35 @@ namespace SpaceTravel
         private void timer1_Tick(object sender, EventArgs e)
         {
             Invalidate();
-            
+            if (scene.started)
+            {
+                if (scene.Speed == 1)
+                {           
+                    passedKm += 11;
+                }
+                else if(scene.Speed == 10)
+                {
+                    passedKm += 11111;
+                }
+                else
+                {
+                    passedKm += 111111;
+                }
+                if (passedKm >= dist)
+                {
+                    passedKm = dist;
+                    L_DistanceNum.Text = $"{dist-passedKm}km";
+                    PB_Distance.Value = 100;
+                    scene.started = false;
+                    L_START.Text = "START";
+                    MessageBox.Show("Arrived");
+                    return;
+                    
+                }
+
+                PB_Distance.Value = (int) Scene.relativeMap(passedKm, 0, dist, 0, 100);
+                L_DistanceNum.Text = $"{dist-passedKm}km";
+            }
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -105,6 +139,8 @@ namespace SpaceTravel
         {
             if (checkStarted())
             {
+                passedKm = 0;
+                PB_Distance.Value = 0;
                 if (planetCount < imageCount - 1)
                 {
                     planetCount++;
@@ -123,6 +159,8 @@ namespace SpaceTravel
         {
             if (checkStarted())
             {
+                passedKm = 0;
+                PB_Distance.Value = 0;
                 if (planetCount > 0)
                 {
                     planetCount--;
@@ -138,9 +176,11 @@ namespace SpaceTravel
 
         private void UpdateLabels()
         {
+            dist = scene.Distance[planetCount];
             PB_Planet.Image = IL_Planets.Images[planetCount];
-            L_DistanceNum.Text = $"{scene.Distance[planetCount]}km";
+            L_DistanceNum.Text = $"{dist}km";
             L_PlanetName.Text = $"Name: {scene.Planets[planetCount]}";
+            
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -183,6 +223,47 @@ namespace SpaceTravel
                     L_START.ForeColor = Color.MediumSeaGreen;
                     flag = true;
                 }
+            }
+        }
+
+        private void SpaceTravel_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.W)
+            {
+                Scene.UP = 1;
+               
+            }else if (e.KeyCode == Keys.S)
+            {
+                Scene.DOWN = -1;
+            }
+            else if (e.KeyCode == Keys.D)
+            {
+                Scene.RIGHT = -1;
+            }
+            else if (e.KeyCode == Keys.A)
+            {
+                Scene.LEFT = 1;
+            }
+        }
+
+        private void SpaceTravel_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.W)
+            {
+
+                Scene.UP = 0;
+            }
+            else if (e.KeyCode == Keys.S)
+            {
+                Scene.DOWN = 0;
+            }
+            else if (e.KeyCode == Keys.D)
+            {
+                Scene.RIGHT = 0;
+            }
+            else if (e.KeyCode == Keys.A)
+            {
+                Scene.LEFT = 0;
             }
         }
     }

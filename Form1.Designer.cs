@@ -130,7 +130,6 @@
             this.PB_Distance.Size = new System.Drawing.Size(157, 10);
             this.PB_Distance.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.PB_Distance.TabIndex = 6;
-            this.PB_Distance.Value = 50;
             // 
             // L_Destination
             // 
@@ -267,10 +266,13 @@
             this.Controls.Add(this.L_Cruise);
             this.Controls.Add(this.L_speed);
             this.Controls.Add(this.pictureBox1);
+            this.KeyPreview = true;
             this.Name = "SpaceTravel";
             this.Text = "SpaceTravel";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SpaceTravel_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SpaceTravel_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Planet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.EP_DestinationSwitch)).EndInit();

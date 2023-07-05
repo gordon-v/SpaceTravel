@@ -18,6 +18,14 @@ namespace SpaceTravel
         public int Speed { set; get; }
         public static Point center { set; get; }
 
+        public static Color starColor { set; get; }
+
+        public static int UP { set; get; } = 0;
+        public static int DOWN { set; get; } = 0;
+        public static int LEFT { set; get; } = 0;
+        public static int RIGHT { set; get; } = 0;
+
+
         List<Star> stars;
         public Scene(int Width, int Height) { 
             this.Width = Width;
@@ -34,6 +42,7 @@ namespace SpaceTravel
             Planets[1] = "Moon";
             Planets[2] = "Neptune";
 
+            starColor = Color.White;
             stars = new List<Star>();
         }
 
@@ -57,9 +66,10 @@ namespace SpaceTravel
         }
 
         //https://stackoverflow.com/questions/42477367/what-is-the-equivalent-of-map-from-processing-in-other-languages
-        public static double relativeMap(double value, double start1, double stop1, double start2, double stop2)    
+        public static double relativeMap(double value, double start1, double stop1, double start2, double stop2)  //remaps a number from one range to another  
         {
             return (value - start1) / (stop1 - start1) * (stop2 - start2) + start2;
         }
+        
     }
 }
